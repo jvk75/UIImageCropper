@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CropperExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2hq-Uc-P8Z">
+                                <rect key="frame" x="56" y="147" width="262.5" height="393.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2hq-Uc-P8Z" secondAttribute="height" multiplier="2:3" id="BX5-Lw-Czj"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONc-WP-Z8n">
+                                <rect key="frame" x="145" y="56" width="84" height="30"/>
+                                <state key="normal" title="Take picture"/>
+                                <connections>
+                                    <action selector="takePicturePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aFQ-0T-cAp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ONc-WP-Z8n" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="2oG-lG-Nrt"/>
+                            <constraint firstItem="2hq-Uc-P8Z" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="71j-ft-fZU"/>
+                            <constraint firstItem="2hq-Uc-P8Z" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" id="Cc7-Am-BSd"/>
+                            <constraint firstItem="2hq-Uc-P8Z" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="bBv-7P-YiA"/>
+                            <constraint firstItem="ONc-WP-Z8n" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="36" id="mxc-o0-kBt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="2hq-Uc-P8Z" id="MEa-LB-qRX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--Image Cropper-->
+        <scene sceneID="Cd0-Rf-h2z">
+            <objects>
+                <viewController storyboardIdentifier="UIImageCropper" id="UGG-Qw-dsS" customClass="UIImageCropper" customModule="CropperExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aTr-0v-0wC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="mg3-LT-luz"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wdj-wX-kGc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1502" y="34"/>
+        </scene>
+    </scenes>
+</document>
