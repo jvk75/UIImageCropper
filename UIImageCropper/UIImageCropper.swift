@@ -137,23 +137,27 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         cropView.backgroundColor = UIColor.clear
 
         // control buttons
+        var cropCenterXMultiplier: CGFloat = 1.0
+        if picker!.sourceType != .camera { //hide retake/cancel when using camera as camera has its own preview
+            let cancelButton = UIButton(type: .custom)
+            cancelButton.translatesAutoresizingMaskIntoConstraints = false
+            cancelButton.setTitle(cancelButtonText, for: .normal)
+            cancelButton.addTarget(self, action: #selector(cropCancel), for: .touchUpInside)
+            bottomView.addSubview(cancelButton)
+            let centerCancelXConst = NSLayoutConstraint(item: cancelButton, attribute: .centerX, relatedBy: .equal, toItem: bottomView, attribute: .centerX, multiplier: 0.5, constant: 0)
+            let centerCancelYConst = NSLayoutConstraint(item: cancelButton, attribute: .centerY, relatedBy: .equal, toItem: bottomView, attribute: .centerY, multiplier: 1, constant: 0)
+            bottomView.addConstraints([centerCancelXConst, centerCancelYConst])
+            cropCenterXMultiplier = 1.5
+        }
         let cropButton = UIButton(type: .custom)
         cropButton.translatesAutoresizingMaskIntoConstraints = false
         cropButton.setTitle(cropButtonText, for: .normal)
         cropButton.addTarget(self, action: #selector(cropDone), for: .touchUpInside)
         bottomView.addSubview(cropButton)
-        let centerCropXConst = NSLayoutConstraint(item: cropButton, attribute: .centerX, relatedBy: .equal, toItem: bottomView, attribute: .centerX, multiplier: 1.5, constant: 0)
+        let centerCropXConst = NSLayoutConstraint(item: cropButton, attribute: .centerX, relatedBy: .equal, toItem: bottomView, attribute: .centerX, multiplier: cropCenterXMultiplier, constant: 0)
         let centerCropYConst = NSLayoutConstraint(item: cropButton, attribute: .centerY, relatedBy: .equal, toItem: bottomView, attribute: .centerY, multiplier: 1, constant: 0)
         bottomView.addConstraints([centerCropXConst, centerCropYConst])
 
-        let cancelButton = UIButton(type: .custom)
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.setTitle(cancelButtonText, for: .normal)
-        cancelButton.addTarget(self, action: #selector(cropCancel), for: .touchUpInside)
-        bottomView.addSubview(cancelButton)
-        let centerCancelXConst = NSLayoutConstraint(item: cancelButton, attribute: .centerX, relatedBy: .equal, toItem: bottomView, attribute: .centerX, multiplier: 0.5, constant: 0)
-        let centerCancelYConst = NSLayoutConstraint(item: cancelButton, attribute: .centerY, relatedBy: .equal, toItem: bottomView, attribute: .centerY, multiplier: 1, constant: 0)
-        bottomView.addConstraints([centerCancelXConst, centerCancelYConst])
 
         bottomView.layoutIfNeeded()
         topView.layoutIfNeeded()
