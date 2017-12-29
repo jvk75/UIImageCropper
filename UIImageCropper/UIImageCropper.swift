@@ -76,7 +76,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
     /// initializer
     /// - parameter cropRatio
     /// Aspect ratio of the cropped image
-    convenience init(cropRatio: CGFloat) {
+    convenience public init(cropRatio: CGFloat) {
         self.init()
         self.cropRatio = cropRatio
     }
