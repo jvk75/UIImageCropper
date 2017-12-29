@@ -46,6 +46,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
                 return
             }
             ratio = image.size.height / image.size.width
+            imageView.image = image
         }
     }
     /// cropped image
@@ -248,6 +249,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             return
         }
+        layoutDone = false
         self.image = image
         picker.present(self, animated: true, completion: nil)
     }
