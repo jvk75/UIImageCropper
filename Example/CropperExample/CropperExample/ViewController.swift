@@ -8,16 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class ViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     
     private var picker = UIImagePickerController()
-    
+    private let cropper = UIImageCropper(cropRatio: 2/3)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        picker.delegate = self
+
+        //setup the cropper
+        cropper.picker = picker
+        cropper.delegate = self
+        //cropper.cropRatio = 2/3 //(can be set during runtime or in init)
     }
 
     @IBAction func takePicturePressed(_ sender: Any) {
@@ -35,17 +39,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }))
         self.present(alertController, animated: true, completion: nil)
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-            return
-        }
-        picker.dismiss(animated: true, completion: nil)
-        let cropper = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UIImageCropper") as! UIImageCropper
-        cropper.image = image
-        cropper.cropRatio = 2/3
-        self.present(cropper, animated: true, completion: nil)
-    }
-
 }
 
+extension ViewController: UIImageCropperProtocol {
+    func didCropImage(originalImage: UIImage?, croppedImage: UIImage?) {
+        imageView.image = croppedImage
+    }
+
+    //optional
+    func didCancel() {
+        picker.dismiss(animated: true, completion: nil)
+        print("did cancel")
+    }
+}
