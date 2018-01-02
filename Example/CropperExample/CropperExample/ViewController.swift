@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     
-    private var picker = UIImagePickerController()
+    private let picker = UIImagePickerController()
     private let cropper = UIImageCropper(cropRatio: 2/3)
 
     override func viewDidLoad() {

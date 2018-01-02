@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'UIImageCropper'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'Simple Image cropper for UIImagePickerController with customisable aspect ratio.'
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +18,8 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-Simple Image cropper for UIImagePickerController with customisable aspect ratio. Made purely with Swift!
+Simple UIImage cropper for UIImagePickerController with customisable crop aspect ratio. Made purely with Swift4!
+Replaces the iOS "crop only to square" functionality. Easy few line setup with delegate method.
 DESC
 
   s.homepage         = 'https://github.com/jvk75/UIImageCropper'
