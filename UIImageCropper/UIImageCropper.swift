@@ -234,9 +234,8 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         let y = (cropView.frame.origin.y - imageView.frame.origin.y) / imageView.frame.height
 
         let cropFrame = CGRect(x: x * imageSize.width, y: y * imageSize.height, width: imageSize.width * width, height: imageSize.height * height)
-
         if let cropCGImage = image.cgImage?.cropping(to: cropFrame) {
-            let cropImage = UIImage(cgImage: cropCGImage)
+            let cropImage = UIImage(cgImage: cropCGImage, scale: 1, orientation: .up)//(cgImage: cropCGImage,)
             return cropImage
         }
         return nil
@@ -254,7 +253,8 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         layoutDone = false
-        self.image = image
+        
+        self.image = image.fixOrientation()
         picker.present(self, animated: true, completion: nil)
     }
 }

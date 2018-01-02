@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49329A1A1FFB79F600741BBA /* UIImage+FixOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49329A191FFB79F600741BBA /* UIImage+FixOrientation.swift */; };
 		49B9550A1FF5795B00BA9181 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B955091FF5795B00BA9181 /* AppDelegate.swift */; };
 		49B9550C1FF5795B00BA9181 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9550B1FF5795B00BA9181 /* ViewController.swift */; };
 		49B9550F1FF5795B00BA9181 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B9550D1FF5795B00BA9181 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		49329A191FFB79F600741BBA /* UIImage+FixOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+FixOrientation.swift"; path = "../../UIImageCropper/UIImage+FixOrientation.swift"; sourceTree = "<group>"; };
 		49B955061FF5795B00BA9181 /* CropperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CropperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B955091FF5795B00BA9181 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49B9550B1FF5795B00BA9181 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +45,7 @@
 				49B955081FF5795B00BA9181 /* CropperExample */,
 				49B955071FF5795B00BA9181 /* Products */,
 				49B9551D1FF57EBF00BA9181 /* UIImageCropper.swift */,
+				49329A191FFB79F600741BBA /* UIImage+FixOrientation.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +144,7 @@
 			files = (
 				49B9550C1FF5795B00BA9181 /* ViewController.swift in Sources */,
 				49B9551E1FF57EC000BA9181 /* UIImageCropper.swift in Sources */,
+				49329A1A1FFB79F600741BBA /* UIImage+FixOrientation.swift in Sources */,
 				49B9550A1FF5795B00BA9181 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
