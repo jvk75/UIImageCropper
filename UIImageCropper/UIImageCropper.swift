@@ -129,7 +129,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         topView.addSubview(cropView)
         let centerXConst = NSLayoutConstraint(item: cropView, attribute: .centerX, relatedBy: .equal, toItem: topView, attribute: .centerX, multiplier: 1, constant: 0)
         let centerYConst = NSLayoutConstraint(item: cropView, attribute: .centerY, relatedBy: .equal, toItem: topView, attribute: .centerY, multiplier: 1, constant: 0)
-        let widthConst = NSLayoutConstraint(item: cropView, attribute: .width, relatedBy: .equal, toItem: topView, attribute: .width, multiplier: 0.8, constant: 0)
+        let widthConst = NSLayoutConstraint(item: cropView, attribute: .width, relatedBy: .equal, toItem: topView, attribute: .width, multiplier: 0.9, constant: 0)
         let ratioConst = NSLayoutConstraint(item: cropView, attribute: .width, relatedBy: .equal, toItem: cropView, attribute: .height, multiplier: cropRatio, constant: 0)
         cropView.addConstraints([ratioConst])
         topView.addConstraints([widthConst, centerXConst, centerYConst])
@@ -174,12 +174,17 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        guard !layoutDone else {
+        guard !layoutDone, let image = image else {
             return
         }
         layoutDone = true
-        imageWidthConst?.constant = cropView.frame.height / ratio
-        imageHeightConst?.constant = cropView.frame.height
+        if image.size.width > image.size.height {
+            imageWidthConst?.constant = cropView.frame.height / ratio
+            imageHeightConst?.constant = cropView.frame.height
+        } else {
+            imageWidthConst?.constant = cropView.frame.width
+            imageHeightConst?.constant = cropView.frame.width * ratio
+        }
 
         let horizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(<=\(cropView.frame.origin.x))-[view]-(<=\(cropView.frame.origin.x))-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": imageView])
         let vertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(<=\(cropView.frame.origin.y))-[view]-(<=\(cropView.frame.origin.y))-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": imageView])
