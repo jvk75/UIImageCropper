@@ -45,6 +45,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
             guard let image = self.image else {
                 return
             }
+            layoutDone = false
             ratio = image.size.height / image.size.width
             imageView.image = image
         }
@@ -91,7 +92,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         //main views
         topView.backgroundColor = UIColor.clear
         let bottomView = UIView()
-        bottomView.backgroundColor = UIColor.clear
+        bottomView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         self.view.addSubview(topView)
         self.view.addSubview(bottomView)
         topView.translatesAutoresizingMaskIntoConstraints = false
@@ -132,7 +133,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         let ratioConst = NSLayoutConstraint(item: cropView, attribute: .width, relatedBy: .equal, toItem: cropView, attribute: .height, multiplier: cropRatio, constant: 0)
         cropView.addConstraints([ratioConst])
         topView.addConstraints([widthConst, centerXConst, centerYConst])
-        cropView.layer.borderWidth = 2
+        cropView.layer.borderWidth = 1
         cropView.layer.borderColor = UIColor.white.cgColor
         cropView.backgroundColor = UIColor.clear
 
@@ -157,7 +158,8 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         let centerCropXConst = NSLayoutConstraint(item: cropButton, attribute: .centerX, relatedBy: .equal, toItem: bottomView, attribute: .centerX, multiplier: cropCenterXMultiplier, constant: 0)
         let centerCropYConst = NSLayoutConstraint(item: cropButton, attribute: .centerY, relatedBy: .equal, toItem: bottomView, attribute: .centerY, multiplier: 1, constant: 0)
         bottomView.addConstraints([centerCropXConst, centerCropYConst])
-
+        
+        self.view.bringSubview(toFront: bottomView)
 
         bottomView.layoutIfNeeded()
         topView.layoutIfNeeded()
