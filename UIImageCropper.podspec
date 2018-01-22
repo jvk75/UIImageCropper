@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'UIImageCropper'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'Simple Image cropper for UIImagePickerController with customisable aspect ratio.'
 
 # This description is used to generate tags and improve search results.
