@@ -48,6 +48,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
             layoutDone = false
             ratio = image.size.height / image.size.width
             imageView.image = image
+            self.view.layoutIfNeeded()
         }
     }
     /// cropped image
@@ -56,6 +57,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private let topView = UIView()
+    private let fadeView = UIView()
     private let imageView: UIImageView = UIImageView()
     private let cropView: UIView = UIView()
 
@@ -92,7 +94,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         //main views
         topView.backgroundColor = UIColor.clear
         let bottomView = UIView()
-        bottomView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        bottomView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         self.view.addSubview(topView)
         self.view.addSubview(bottomView)
         topView.translatesAutoresizingMaskIntoConstraints = false
@@ -111,7 +113,9 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         leadConst = NSLayoutConstraint(item: imageView, attribute: .leading, relatedBy: .equal, toItem: topView, attribute: .leading, multiplier: 1, constant: 0)
         leadConst?.priority = .defaultHigh
         imageWidthConst = NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 1)
+        imageWidthConst?.priority = .required
         imageHeightConst = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 1)
+        imageHeightConst?.priority = .required
         imageView.addConstraints([imageHeightConst!, imageWidthConst!])
         topView.addConstraints([topConst!, leadConst!])
         imageView.image = self.image
@@ -123,6 +127,15 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         imageView.addGestureRecognizer(panGesture)
         imageView.isUserInteractionEnabled = true
 
+        //fade overlay
+        fadeView.translatesAutoresizingMaskIntoConstraints = false
+        fadeView.isUserInteractionEnabled = false
+        fadeView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        topView.addSubview(fadeView)
+        let horizontalFadeConst = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(0)-[view]-(0)-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": fadeView])
+        let verticalFadeConst = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(0)-[view]-(0)-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": fadeView])
+        topView.addConstraints(horizontalFadeConst + verticalFadeConst)
+
         // crop overlay
         cropView.translatesAutoresizingMaskIntoConstraints = false
         cropView.isUserInteractionEnabled = false
@@ -130,9 +143,11 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         let centerXConst = NSLayoutConstraint(item: cropView, attribute: .centerX, relatedBy: .equal, toItem: topView, attribute: .centerX, multiplier: 1, constant: 0)
         let centerYConst = NSLayoutConstraint(item: cropView, attribute: .centerY, relatedBy: .equal, toItem: topView, attribute: .centerY, multiplier: 1, constant: 0)
         let widthConst = NSLayoutConstraint(item: cropView, attribute: .width, relatedBy: .equal, toItem: topView, attribute: .width, multiplier: 0.9, constant: 0)
+        widthConst.priority = .defaultHigh
+        let heightConst = NSLayoutConstraint(item: cropView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: topView, attribute: .height, multiplier: 0.9, constant: 0)
         let ratioConst = NSLayoutConstraint(item: cropView, attribute: .width, relatedBy: .equal, toItem: cropView, attribute: .height, multiplier: cropRatio, constant: 0)
         cropView.addConstraints([ratioConst])
-        topView.addConstraints([widthConst, centerXConst, centerYConst])
+        topView.addConstraints([widthConst, heightConst, centerXConst, centerYConst])
         cropView.layer.borderWidth = 1
         cropView.layer.borderColor = UIColor.white.cgColor
         cropView.backgroundColor = UIColor.clear
@@ -174,23 +189,34 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        guard !layoutDone, let image = image else {
+        guard !layoutDone else {
             return
         }
         layoutDone = true
-        if image.size.width > image.size.height {
+        maskFadeView()
+        
+        if ratio < 1 {
             imageWidthConst?.constant = cropView.frame.height / ratio
             imageHeightConst?.constant = cropView.frame.height
         } else {
             imageWidthConst?.constant = cropView.frame.width
             imageHeightConst?.constant = cropView.frame.width * ratio
         }
-
+        
         let horizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(<=\(cropView.frame.origin.x))-[view]-(<=\(cropView.frame.origin.x))-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": imageView])
         let vertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(<=\(cropView.frame.origin.y))-[view]-(<=\(cropView.frame.origin.y))-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": imageView])
         topView.addConstraints(horizontal + vertical)
         orgWidth = imageWidthConst!.constant
         orgHeight = imageHeightConst!.constant
+    }
+    
+    private func maskFadeView() {
+        let path = UIBezierPath(rect: cropView.frame)
+        path.append(UIBezierPath(rect: fadeView.frame))
+        let mask = CAShapeLayer()
+        mask.fillRule = kCAFillRuleEvenOdd
+        mask.path = path.cgPath
+        fadeView.layer.mask = mask
     }
 
     //MARK: - button actions
