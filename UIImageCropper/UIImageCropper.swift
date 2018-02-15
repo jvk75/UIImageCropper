@@ -76,6 +76,9 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
     private var leadStart: CGFloat = 0
     private var pinchStart: CGPoint = .zero
     
+    private let cropButton = UIButton(type: .custom)
+    private let cancelButton = UIButton(type: .custom)
+    
     //MARK: - inits
     /// initializer
     /// - parameter cropRatio
@@ -154,8 +157,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
 
         // control buttons
         var cropCenterXMultiplier: CGFloat = 1.0
-        if picker!.sourceType != .camera { //hide retake/cancel when using camera as camera has its own preview
-            let cancelButton = UIButton(type: .custom)
+        if picker?.sourceType != .camera { //hide retake/cancel when using camera as camera has its own preview
             cancelButton.translatesAutoresizingMaskIntoConstraints = false
             cancelButton.setTitle(cancelButtonText, for: .normal)
             cancelButton.addTarget(self, action: #selector(cropCancel), for: .touchUpInside)
@@ -165,9 +167,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
             bottomView.addConstraints([centerCancelXConst, centerCancelYConst])
             cropCenterXMultiplier = 1.5
         }
-        let cropButton = UIButton(type: .custom)
         cropButton.translatesAutoresizingMaskIntoConstraints = false
-        cropButton.setTitle(cropButtonText, for: .normal)
         cropButton.addTarget(self, action: #selector(cropDone), for: .touchUpInside)
         bottomView.addSubview(cropButton)
         let centerCropXConst = NSLayoutConstraint(item: cropButton, attribute: .centerX, relatedBy: .equal, toItem: bottomView, attribute: .centerX, multiplier: cropCenterXMultiplier, constant: 0)
@@ -182,6 +182,10 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
     
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.cancelButton.setTitle(cancelButtonText, for: .normal)
+        self.cropButton.setTitle(cropButtonText, for: .normal)
+        
         if image == nil {
             self.dismiss(animated: true, completion: nil)
         }

@@ -33,12 +33,21 @@
                                     <action selector="takePicturePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aFQ-0T-cAp"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwF-md-sdr">
+                                <rect key="frame" x="119" y="590" width="136" height="30"/>
+                                <state key="normal" title="Crop existing Image"/>
+                                <connections>
+                                    <action selector="cropExistingImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EDz-Tg-E9f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ONc-WP-Z8n" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="2oG-lG-Nrt"/>
                             <constraint firstItem="2hq-Uc-P8Z" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="71j-ft-fZU"/>
                             <constraint firstItem="2hq-Uc-P8Z" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" id="Cc7-Am-BSd"/>
+                            <constraint firstItem="UwF-md-sdr" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Mgz-ox-vub"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="UwF-md-sdr" secondAttribute="bottom" constant="47" id="aUl-E9-3Lw"/>
                             <constraint firstItem="2hq-Uc-P8Z" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="bBv-7P-YiA"/>
                             <constraint firstItem="ONc-WP-Z8n" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="36" id="mxc-o0-kBt"/>
                         </constraints>
