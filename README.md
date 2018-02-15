@@ -29,7 +29,7 @@ Import the pod
 import UIImageCropper
 ```
 
-Create instanses of UIImagePickerController and UIImageCropper
+Create instanses of UIImageCropper and UIImagePickerController *(optional, if cropping existing UIImage)*
 
 UIImageCropper can take  ```cropRatio``` as parameter.  Default ratio is 1 (square).
 
@@ -44,9 +44,20 @@ Setup UIImageCropper
 cropper.picker = picker
 cropper.delegate = self
 //cropper.cropRatio = 2/3 //(can be set during runtime or in init)
+//cropper.cropButtonText = "Crop" // button labes can be localised/changed
+//cropper.cancelButtonText = "Cancel"
+
 ```
 
-Implement ```UIImageCropperProtocol```delegate method/s
+If just cropping existing UIImage there is no need to set up picker, delegate is enough.
+Just give image to croppen and present it.
+
+```
+cropper.image = UIImage(named: "image")
+viewController.present(cropper, animated: true, completion: nil)
+```
+
+For both cases implement ```UIImageCropperProtocol```delegate method/s
 
 ```
 func didCropImage(originalImage: UIImage?, croppedImage: UIImage?) {
@@ -68,10 +79,6 @@ self.present(self.picker, animated: true, completion: nil)
 
 For full usage exmaple see **CropperExample** in Example folder.
 
-## Coming soon
-
-* Possibility to use cropper without UIImagePickerController
-
 ## Issues and contribution
 
 If you find any issues please add and issue to this repository.
@@ -80,7 +87,7 @@ Improvements and/or fixes as pull requests are more than welcome.
 
 ## Author
 
-Jari Kalinainen, jari@klubitii.com
+Jari Kalinainen, jari(a)klubitii.com
 
 ## License
 
