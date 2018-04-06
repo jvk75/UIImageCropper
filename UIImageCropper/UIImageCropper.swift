@@ -55,7 +55,10 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
     public var cropImage: UIImage? {
         return crop()
     }
-    
+
+    /// autoClosePicker: if true, picker is dismissed when when image is cropped. When false parent needs to close picker.
+    public var autoClosePicker: Bool = true
+
     private let topView = UIView()
     private let fadeView = UIView()
     private let imageView: UIImageView = UIImageView()
@@ -227,7 +230,9 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
     @objc func cropDone() {
         delegate?.didCropImage(originalImage: self.image, croppedImage: self.cropImage)
         self.dismiss(animated: false, completion: {
-            self.picker?.dismiss(animated: true, completion: nil)
+            if self.autoClosePicker {
+                self.picker?.dismiss(animated: true, completion: nil)
+            }
         })
     }
 
