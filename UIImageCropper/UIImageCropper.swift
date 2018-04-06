@@ -228,11 +228,11 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
 
     //MARK: - button actions
     @objc func cropDone() {
-        delegate?.didCropImage(originalImage: self.image, croppedImage: self.cropImage)
         self.dismiss(animated: false, completion: {
             if self.autoClosePicker {
                 self.picker?.dismiss(animated: true, completion: nil)
             }
+            self.delegate?.didCropImage(originalImage: self.image, croppedImage: self.cropImage)
         })
     }
 
