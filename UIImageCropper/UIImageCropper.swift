@@ -297,6 +297,11 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         layoutDone = false
         
         self.image = image.fixOrientation()
-        picker.present(self, animated: true, completion: nil)
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            topController.present(self, animated: true, completion: nil)
+        }
     }
 }
