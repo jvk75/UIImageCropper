@@ -25,9 +25,9 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
     /// Aspect ratio of the cropped image
     public var cropRatio: CGFloat = 1
     /// delegate that implements UIImageCropperProtocol
-    public var delegate: UIImageCropperProtocol?
+    public weak var delegate: UIImageCropperProtocol?
     /// UIImagePickerController picker
-    public var picker: UIImagePickerController? {
+    public weak var picker: UIImagePickerController? {
         didSet {
             picker?.delegate = self
             picker?.allowsEditing = false
@@ -297,11 +297,6 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
         layoutDone = false
         
         self.image = image.fixOrientation()
-        if var topController = UIApplication.shared.keyWindow?.rootViewController {
-            while let presentedViewController = topController.presentedViewController {
-                topController = presentedViewController
-            }
-            topController.present(self, animated: true, completion: nil)
-        }
+        self.picker?.present(self, animated: true, completion: nil)
     }
 }
