@@ -43,7 +43,7 @@ Setup UIImageCropper
 ```
 cropper.picker = picker
 cropper.delegate = self
-//cropper.cropRatio = 2/3 //(can be set during runtime or in init)
+//cropper.cropRatio = 2/3 //(can be set with variable, before cropper is presented, or in cropper init)
 //cropper.cropButtonText = "Crop" // button labes can be localised/changed
 //cropper.cancelButtonText = "Cancel"
 
