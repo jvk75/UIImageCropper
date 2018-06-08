@@ -17,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		491DAAE820CA66A500A1C33A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		49329A191FFB79F600741BBA /* UIImage+FixOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+FixOrientation.swift"; path = "../../UIImageCropper/UIImage+FixOrientation.swift"; sourceTree = "<group>"; };
 		49B955061FF5795B00BA9181 /* CropperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CropperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B955091FF5795B00BA9181 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +47,7 @@
 				49B955071FF5795B00BA9181 /* Products */,
 				49B9551D1FF57EBF00BA9181 /* UIImageCropper.swift */,
 				49329A191FFB79F600741BBA /* UIImage+FixOrientation.swift */,
+				491DAAE820CA66A500A1C33A /* README.md */,
 			);
 			sourceTree = "<group>";
 		};

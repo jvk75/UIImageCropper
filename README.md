@@ -53,6 +53,7 @@ If just cropping existing UIImage there is no need to set up picker, delegate is
 Just give image to croppen and present it.
 
 ```
+cropper.picker = nil // Make sure not set the picker when doing existing image cropping
 cropper.image = UIImage(named: "image")
 viewController.present(cropper, animated: true, completion: nil)
 ```

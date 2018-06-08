@@ -200,8 +200,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         layoutDone = true
-        maskFadeView()
-        
+
         if ratio < 1 {
             imageWidthConst?.constant = cropView.frame.height / ratio
             imageHeightConst?.constant = cropView.frame.height
@@ -209,10 +208,12 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
             imageWidthConst?.constant = cropView.frame.width
             imageHeightConst?.constant = cropView.frame.width * ratio
         }
-        
+
         let horizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(<=\(cropView.frame.origin.x))-[view]-(<=\(cropView.frame.origin.x))-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": imageView])
         let vertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(<=\(cropView.frame.origin.y))-[view]-(<=\(cropView.frame.origin.y))-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": imageView])
         topView.addConstraints(horizontal + vertical)
+        
+        maskFadeView()
         orgWidth = imageWidthConst!.constant
         orgHeight = imageHeightConst!.constant
     }
@@ -228,16 +229,34 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
 
     //MARK: - button actions
     @objc func cropDone() {
-        self.dismiss(animated: false, completion: {
+        presenting = false
+        if picker == nil {
+            self.dismiss(animated: false, completion: {
+                if self.autoClosePicker {
+                    self.picker?.dismiss(animated: true, completion: nil)
+                }
+                self.delegate?.didCropImage(originalImage: self.image, croppedImage: self.cropImage)
+            })
+        } else {
+            self.endAppearanceTransition()
+            self.view.removeFromSuperview()
+            self.removeFromParentViewController()
             if self.autoClosePicker {
                 self.picker?.dismiss(animated: true, completion: nil)
             }
             self.delegate?.didCropImage(originalImage: self.image, croppedImage: self.cropImage)
-        })
+        }
     }
-
+    
     @objc func cropCancel() {
-        self.dismiss(animated: true, completion: nil)
+        presenting = false
+        if picker == nil {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.endAppearanceTransition()
+            self.view.removeFromSuperview()
+            self.removeFromParentViewController()
+        }
     }
 
     //MARK: - gesture handling
@@ -277,7 +296,7 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
 
         let cropFrame = CGRect(x: x * imageSize.width, y: y * imageSize.height, width: imageSize.width * width, height: imageSize.height * height)
         if let cropCGImage = image.cgImage?.cropping(to: cropFrame) {
-            let cropImage = UIImage(cgImage: cropCGImage, scale: 1, orientation: .up)//(cgImage: cropCGImage,)
+            let cropImage = UIImage(cgImage: cropCGImage, scale: 1, orientation: .up)
             return cropImage
         }
         return nil
@@ -285,18 +304,43 @@ public class UIImageCropper: UIViewController, UIImagePickerControllerDelegate, 
 
     //MARK: - UIImagePickerControllerDelegates
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        presenting = false
         if delegate?.didCancel?() == nil {
             picker.dismiss(animated: true, completion: nil)
         }
     }
-
+    
+    var presenting = false
+    
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard !presenting else {
+            return
+        }
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             return
         }
         layoutDone = false
-        
+        presenting = true
         self.image = image.fixOrientation()
-        self.picker?.present(self, animated: true, completion: nil)
+        self.picker?.view.addSubview(self.view)
+        self.view.constraintToFill(superView: self.picker?.view)
+        self.picker?.addChildViewController(self)
+        self.willMove(toParentViewController: self.picker)
+        self.beginAppearanceTransition(true, animated: false)
+     }
+    
+}
+
+extension UIView {
+    func constraintToFill(superView view: UIView?) {
+        guard let view = view else {
+            assertionFailure("superview is nil")
+            return
+        }
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        self.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 }

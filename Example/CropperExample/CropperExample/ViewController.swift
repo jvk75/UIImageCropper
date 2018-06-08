@@ -19,19 +19,26 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         //setup the cropper
-        cropper.picker = picker
         cropper.delegate = self
         //cropper.cropRatio = 2/3 //(can be set during runtime or in init)
         cropper.cropButtonText = "Crop" // this can be localized if needed (as well as the cancelButtonText)
     }
     
+    @IBAction func closeView(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func cropExistingImage(_ sender: Any) {
+        let cropper = UIImageCropper(cropRatio: 2/3)
+        cropper.delegate = self
+        cropper.picker = nil
         cropper.image = UIImage(named: "image")
         cropper.cancelButtonText = "Cancel"
         self.present(cropper, animated: true, completion: nil)
     }
 
     @IBAction func takePicturePressed(_ sender: Any) {
+        cropper.picker = picker
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         cropper.cancelButtonText = "Retake"
