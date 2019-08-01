@@ -40,7 +40,9 @@ class ViewController: UIViewController {
     @IBAction func takePicturePressed(_ sender: Any) {
         cropper.picker = picker
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRect(origin: self.view.center, size: CGSize.zero)
+
         cropper.cancelButtonText = "Retake"
         
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .default) { _ in
