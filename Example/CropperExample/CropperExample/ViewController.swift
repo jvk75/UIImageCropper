@@ -43,10 +43,12 @@ class ViewController: UIViewController {
         
         cropper.cancelButtonText = "Retake"
         
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .default) { _ in
-            self.picker.sourceType = .camera
-            self.present(self.picker, animated: true, completion: nil)
-        })
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .default) { _ in
+                self.picker.sourceType = .camera
+                self.present(self.picker, animated: true, completion: nil)
+            })
+        }
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Gallery", comment: ""), style: .default) { _ in
             self.picker.sourceType = .photoLibrary
             self.present(self.picker, animated: true, completion: nil)
