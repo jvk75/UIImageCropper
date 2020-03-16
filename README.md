@@ -15,7 +15,7 @@ Replaces the iOS "crop only to square" functionality. Easy few line setup with d
 UIImageCropper is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-```
+``` ruby
 pod 'UIImageCropper'
 ```
 
@@ -25,22 +25,22 @@ pod 'UIImageCropper'
 
 Import the pod
 
-```
+``` swift
 import UIImageCropper
 ```
 
 Create instanses of UIImageCropper and UIImagePickerController *(optional, if cropping existing UIImage)*
 
-UIImageCropper can take  ```cropRatio``` as parameter.  Default ratio is 1 (square).
+UIImageCropper can take  `cropRatio` as parameter.  Default ratio is 1 (square).
 
-```
+``` swift
 let picker = UIImagePickerController()
 let cropper = UIImageCropper(cropRatio: 2/3)
 ```
 
 Setup UIImageCropper
 
-```
+``` swift
 cropper.picker = picker
 cropper.delegate = self
 //cropper.cropRatio = 2/3 //(can be set with variable, before cropper is presented, or in cropper init)
@@ -52,15 +52,15 @@ cropper.delegate = self
 If just cropping existing UIImage there is no need to set up picker, delegate is enough.
 Just give image to croppen and present it.
 
-```
+``` swift
 cropper.picker = nil // Make sure not set the picker when doing existing image cropping
 cropper.image = UIImage(named: "image")
 viewController.present(cropper, animated: true, completion: nil)
 ```
 
-For both cases implement ```UIImageCropperProtocol```delegate method/s
+For both cases implement `UIImageCropperProtocol` delegate method/s
 
-```
+``` swift
 func didCropImage(originalImage: UIImage?, croppedImage: UIImage?) {
     imageView.image = croppedImage
 }
@@ -74,7 +74,7 @@ func didCancel() {
 
 The UIImageCropper will handle the image picking (delegate methods). To start image picking just present the UIImagePickerController instance.
 
-```
+``` swift
 self.present(self.picker, animated: true, completion: nil)
 ```
 
